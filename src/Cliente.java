@@ -63,7 +63,6 @@ public class Cliente{
         cpfValidacao = cpfValidacao.replaceAll("\\D","");
         //conferindo se cpf possui 11 dígitos
         if (cpfValidacao.length() != 11){
-            System.out.println("CPF invalido");
             return false;
         }
         //conferindo se todos os dígitos são iguais
@@ -74,7 +73,6 @@ public class Cliente{
             }     
         }
         if (todos_digitos_iguais == true){
-            System.out.println("CPF invalido");
             return false;
         }
         //separando os dígitos verificadores para teste
@@ -108,11 +106,13 @@ public class Cliente{
             digito_v2_encontrado = 0;
         }
         if (digito_v1 == digito_v1_encontrado && digito_v2 == digito_v2_encontrado){
-            System.out.println("CPF valido");
             return true;
         } else {
-            System.out.println("CPF invalido");
             return false;
         }
+    }
+
+    public String toString(){
+        return "Nome:" + nome + ",CPF: " + cpf + ",CPF válido: " + this.validarCPF() + ",Data de Nascimento: " + dataNascimento + ",Idade: " + idade + ",Endereço: " + endereco;
     }
 }
