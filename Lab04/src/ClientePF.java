@@ -14,8 +14,9 @@ public class ClientePF extends Cliente{
     private String educacao;
     private String genero;
     private String classeEconomica;
+    private int idade;
 
-    public ClientePF(String nome, String endereco, int anoLicenca, int mesLicenca, int diaLicenca, int anoNascimento, int mesNascimento, int diaNascimento, String educacao, String genero, String classeEconomica, String cpf){
+    public ClientePF(String nome, String endereco, int anoLicenca, int mesLicenca, int diaLicenca, int anoNascimento, int mesNascimento, int diaNascimento, String educacao, String genero, String classeEconomica, String cpf, int idade){
         //chama o construtor da superclasse
         super( nome, endereco);
         this.dataLicenca = Calendar.getInstance();
@@ -28,12 +29,17 @@ public class ClientePF extends Cliente{
         this.genero = genero;
         this.classeEconomica = classeEconomica;
         this.cpf = cpf;
+        this.idade = idade;
         //Definindo data de nascimento
         dataNascimento.set(Calendar.YEAR, anoNascimento);
         dataNascimento.set(Calendar.MONTH, mesNascimento);
         dataNascimento.set(Calendar.DAY_OF_MONTH, diaNascimento);
         
     }
+    public int getIdade(){
+        return idade;
+    }
+
     public Calendar getDataLicenca(){
         return dataLicenca;
     }
@@ -70,17 +76,11 @@ public class ClientePF extends Cliente{
     @Override
     public double calculaScore(){
         int quantidadeCarros = this.listaVeiculos.size();
-        //Criando uma instÂncia relativa ao dia de hj
-        Calendar hoje = Calendar.getInstance();
-        //Calculando a diferença
-        long diferença = hoje.getTimeInMillis()-dataLicenca.getTimeInMillis();
-        //Transformando os milisegundos em anos
-        int idade = (int) (diferença/1000/60/60/24/365);
-        if (idade>=18 && idade<30){
+        if (this.idade>=18 && this.idade<30){
             return CalcSegura.VALOR_BASE.fatoresOperacionais * CalcSegura.FATOR_18_30.fatoresOperacionais * quantidadeCarros; 
-        } else if (idade>=30 && idade<60){
+        } else if (this.idade>=30 && this.idade<60){
             return CalcSegura.VALOR_BASE.fatoresOperacionais * CalcSegura.FATOR_30_60.fatoresOperacionais * quantidadeCarros; 
-        } else if (idade>=60 && idade<90){
+        } else if (this.idade>=60 && this.idade<90){
             return CalcSegura.VALOR_BASE.fatoresOperacionais * CalcSegura.FATOR_60_90.fatoresOperacionais * quantidadeCarros; 
         }
         return 0;

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 public class Seguradora {
 
     /*Classe: Seguradora
@@ -53,11 +52,15 @@ public class Seguradora {
         this.endereco = endereco;
     }
 
+    public ArrayList<Cliente> getListaClientes(){
+        return listaClientes;
+    }
+
     public void cadastrarCliente(Cliente cliente){
         
         //Método para cadastrar cliente na seguradora
-        
         listaClientes.add(cliente);
+        
     }
 
     public boolean removerCliente(String nomeCliente){
@@ -100,12 +103,17 @@ public class Seguradora {
         return lista_retornada;
     }
     
-    public boolean gerarSinistro(String endereco, Seguradora seguradora, Veiculo veiculo, Cliente cliente, int dia, int mes, int ano){
+    public boolean gerarSinistro(String nomeCliente, String placa, String endereco, int ano, int mes, int dia){
 
         //Método que cria um Sinistro e o veicula a um cliente
-
-        Sinistro sinistro = new Sinistro(endereco, seguradora, veiculo, cliente, dia, mes, ano);
-        listaSinistro.add(sinistro);
+        for (int i = 0; i < listaClientes.size(); i++){
+            if (listaClientes.get(i).getNome().equals(nomeCliente)==true){
+                for (int j = 0; j < listaClientes.get(i).getListaVeiculos().size(); j++){
+                    Sinistro sinistro = new Sinistro(endereco, this, listaClientes.get(i).getListaVeiculos().get(j), listaClientes.get(i), dia, mes, ano);
+                    listaSinistro.add(sinistro);
+                }
+            }
+        }
         return true;
     }
 
